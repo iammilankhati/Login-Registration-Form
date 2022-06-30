@@ -109,10 +109,15 @@ const Signin = () => {
     setFormErrors(validate(login));
   };
   const validate = (login) => {
+    /* REGEX TO AUTHENTICATE THE USER EMAIL AND PASSWORD */
+
     const emailregex =
+      // eslint-disable-next-line
       /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
     const passwordregex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
+    /* VALIDATION FOR EMAIL */
     if (!login.email) {
       errors.email = "Email is Required!";
       flag = true;
@@ -120,6 +125,7 @@ const Signin = () => {
       errors.email = "Enter the valid email!";
       flag = true;
     }
+    /* VALIDATION FOR PASSWORD */
     if (!login.password) {
       errors.password = "Password is Required!";
       flag = true;
@@ -132,11 +138,14 @@ const Signin = () => {
       errors.unmatched = "Paswords needs to be matched!";
       flag = true;
     }
+    /* VALIDATION FOR DUPLICATE EMAIL */
     const matchedID = list.filter((item) => item.email === login.email);
     if (matchedID.length > 0) {
       errors.matched = "This email is already registered!";
       flag = true;
     }
+
+    /* IF ALL CORRECT THEN SAVE INPUTS TO LIST */
     if (flag === false) {
       const newItem = { id: new Date().getTime().toString(), ...login };
       setList([...list, newItem]);
@@ -145,11 +154,12 @@ const Signin = () => {
         flag: true,
         msg: "You are successfully registered!",
       });
-      // flag = false;
     }
 
     return errors;
   };
+
+  /* USING THE LOCALSTORAGE TO STORE THE USERINPUTS THROUGH LIST */
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       localStorage.setItem("list", JSON.stringify(list));

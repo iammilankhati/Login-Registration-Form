@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Link from "@material-ui/core/Link";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Alert from "@material-ui/lab/Alert";
-import Home from "./Home";
+
 import {
   Avatar,
   Button,
@@ -16,7 +16,10 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import PersonIcon from "@material-ui/icons/Person";
+
+import Home from "./Home";
 import { useGlobalContext } from "../Context";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -68,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
     right: "0px",
     marginLeft: "auto",
     marginRight: "auto",
-    // boxShadow: "0px 5px 20px 0px grey;",
   },
 
   formStyles: {
@@ -84,7 +86,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "80px",
   },
   gridStyles: {
-    // border: "1px solid red",
     display: "flex",
     flexDirection: "column",
     gap: "2rem",
@@ -94,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Signin = () => {
-  const [visible, setVisible] = useState(false);
   const {
     userLogin,
     setUserLogin,
@@ -104,6 +104,8 @@ const Signin = () => {
     list,
     user,
     setUser,
+    visible,
+    setVisible,
   } = useGlobalContext();
 
   const handleSubmit = (e) => {
@@ -114,10 +116,18 @@ const Signin = () => {
   };
 
   const validate = (userLogin) => {
+    /* FLAG TO KNOW THE ERRORS STATUS */
     let flag = false;
+
+    /* HOLD THE ERROS MESSAGES */
     const errors = {};
+
+    /* REGEX FOR EMAIL VALIDATION */
+
     const emailregex =
+      // eslint-disable-next-line
       /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
     if (!userLogin.email) {
       errors.email = "Email is Required!";
       flag = true;
@@ -129,16 +139,18 @@ const Signin = () => {
       errors.password = "Password is Required!";
       flag = true;
     }
-
+    /* COMPARING USER INPUTS WITH THE LOCALSTORAGE */
     if (flag === false) {
       const loginID = list.filter((item) => {
         return (
           item.email === userLogin.email && item.password === userLogin.password
         );
       });
+
       if (loginID.length === 0) {
         errors.notRegistered = "You are not registered!";
       } else {
+        /* IF EXITS  SAVE THE DETAILS AND NAVIGATE TO HOME */
         setUser(loginID);
         setUserLogin({
           email: userLogin.email,
@@ -149,7 +161,7 @@ const Signin = () => {
     return errors;
   };
   const classes = useStyles();
-
+  /* NAVIGATION TO HOME WHEN USER EXISTS */
   if (user.length > 0) {
     return (
       <>
@@ -165,6 +177,7 @@ const Signin = () => {
           </Avatar>
           <Grid align="center" className={classes.gridStyles}>
             <h2 className={classes.headerStyle}>LOGIN</h2>
+            {/* ERROR MESSAGES */}
             {formErrors.notRegistered && (
               <div className={classes.root}>
                 <Alert severity="error">{formErrors.notRegistered}</Alert>
@@ -192,6 +205,7 @@ const Signin = () => {
                   setUserLogin({ ...userLogin, email: e.target.value })
                 }
               />
+              {/* ERROR MESSAGES */}
               {formErrors.email && (
                 <div className={classes.root}>
                   <Alert severity="error">{formErrors.email}</Alert>

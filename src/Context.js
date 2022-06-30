@@ -27,6 +27,7 @@ export const AppProvider = ({ children }) => {
   const [list, setList] = useState(getLocalStorage);
   const [user, setUser] = useState({});
   const [successInfo, setSuccessInfo] = useState({ flag: false, msg: "" });
+  const [visible, setVisible] = useState(false);
 
   return (
     <AppContext.Provider
@@ -34,6 +35,7 @@ export const AppProvider = ({ children }) => {
         user,
         login,
         list,
+        visible,
         formErrors,
         isSubmit,
         userLogin,
@@ -41,6 +43,7 @@ export const AppProvider = ({ children }) => {
         setUser,
         setList,
         setLogin,
+        setVisible,
         setIsSubmit,
         setFormErrors,
         setUserLogin,
