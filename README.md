@@ -42,7 +42,8 @@ start the server localhost://3000
 
 # Visit App
 
-https://www.myform101.netlify.app
+https://myform101.netlify.app
 
 Thank you! enjoy!!!
+
 # login-register-form
