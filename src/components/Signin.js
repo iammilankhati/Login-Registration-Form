@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 	paper: {
 		padding: "80px 40px 30px 40px",
 		width: "300px",
-		margin: "0 auto",
+		margin: "0 1rem",
 		height: "min-content",
 		borderRadius: "30px",
 		position: "relative",
@@ -81,6 +81,8 @@ const useStyles = makeStyles((theme) => ({
 		background: "#01C3FF",
 		display: "flex",
 		alignItems: "center",
+		display: "flex",
+		justifyContent: "center",
 	},
 	person: {
 		fontSize: "80px",
