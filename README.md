@@ -8,9 +8,8 @@ authenticate the valid user.
 # This form has:
 
 1. Email validation
-2. Password validation -It doesnot accept the special characters like @%....
-   -Password must be at least 8 characters long and should contain a number and
-   an alphabet at least -It can compare the password and confirm password
+2. Password validation -check a password between 7 to 15 characters which
+   contain at least one numeric digit and a special character
 3. It displays all error and success message during the process
 4. It reject the duplicate email registration After the successful matching of
    email and password you will navigate to home page. It has logout button too.
