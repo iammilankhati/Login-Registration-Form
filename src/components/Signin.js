@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 		width: "300px",
 		margin: "0 auto",
 		height: "min-content",
-		borderRadius: "40px",
+		borderRadius: "30px",
 		position: "relative",
 	},
 	headerStyle: {

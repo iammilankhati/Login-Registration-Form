@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 		width: "300px",
 		margin: "0 auto",
 		height: "min-content",
-		borderRadius: "40px",
+		borderRadius: "30px",
 		position: "relative",
 	},
 	headerStyle: {
@@ -169,7 +169,7 @@ const Signin = () => {
 
 	const classes = useStyles();
 	return (
-		<Grid container className={classes.mainStyles} spacing={0}>
+		<Grid container className={classes.mainStyles} sx={{ ml: 2 }}>
 			<Paper elevation={20} className={classes.paper}>
 				<Grid align='center' className={classes.gridStyles}>
 					<h2 className={classes.headerStyle}>SIGN UP</h2>
