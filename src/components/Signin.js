@@ -5,6 +5,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Alert from "@material-ui/lab/Alert";
+import { Navigate } from "react-router-dom";
 
 import {
 	Avatar,
@@ -17,7 +18,6 @@ import {
 import { makeStyles } from "@material-ui/styles";
 import PersonIcon from "@material-ui/icons/Person";
 
-import Home from "./Home";
 import { useGlobalContext } from "../Context";
 
 const useStyles = makeStyles((theme) => ({
@@ -81,7 +81,6 @@ const useStyles = makeStyles((theme) => ({
 		background: "#01C3FF",
 		display: "flex",
 		alignItems: "center",
-		display: "flex",
 		justifyContent: "center",
 	},
 	person: {
@@ -97,6 +96,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 const Signin = () => {
+	localStorage.removeItem("token");
+	localStorage.removeItem("email");
 	const {
 		userLogin,
 		setUserLogin,
@@ -154,6 +155,7 @@ const Signin = () => {
 			} else {
 				/* IF EXITS  SAVE THE DETAILS AND NAVIGATE TO HOME */
 				setUser(loginID);
+
 				setUserLogin({
 					email: userLogin.email,
 					password: "",
@@ -165,11 +167,9 @@ const Signin = () => {
 	const classes = useStyles();
 	/* NAVIGATION TO HOME WHEN USER EXISTS */
 	if (user.length > 0) {
-		return (
-			<>
-				<Home user={user} />
-			</>
-		);
+		localStorage.setItem("token", JSON.stringify(user[0].id));
+		localStorage.setItem("email", JSON.stringify(user[0].email));
+		return <Navigate to='/' />;
 	} else {
 		return (
 			<Grid className={classes.mainStyles} container spacing={0}>

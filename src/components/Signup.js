@@ -71,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
 	mainStyles: {
 		height: "100vh",
 		background: "#01C3FF",
-		display: "flex",
 		alignItems: "center",
 		display: "flex",
 		justifyContent: "center",
@@ -137,7 +136,7 @@ const Signin = () => {
 		}
 		if (!passwordregex.test(login.password)) {
 			errors.unmatched =
-				"Password must be at least 8 character, a number and an alphabet";
+				"Password must include at least 7 digits, a special character and a number";
 			flag = true;
 		} else if (login.password !== login.confirmPassword) {
 			errors.unmatched = "Paswords needs to be matched!";

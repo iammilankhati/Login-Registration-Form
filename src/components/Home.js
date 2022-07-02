@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,6 +8,7 @@ import bg from "../assets/images/bg.jpg";
 import Popover from "@material-ui/core/Popover";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useGlobalContext } from "../Context";
+import { Navigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -25,21 +26,21 @@ const useStyles = makeStyles((theme) => ({
 		padding: theme.spacing(2),
 	},
 }));
-const getLocalStorage = () => {
-	let auth = localStorage.getItem("auth");
-	if (auth) {
-		return JSON.parse(localStorage.getItem("auth"));
-	} else {
-		return false;
-	}
-};
+// const getLocalStorage = () => {
+// 	let auth = localStorage.getItem("auth");
+// 	if (auth) {
+// 		return JSON.parse(localStorage.getItem("auth"));
+// 	} else {
+// 		return false;
+// 	}
+// };
 
-const Home = (props) => {
-	const { setUser } = useGlobalContext();
+const Home = () => {
+	const { setUser, getLocalStorage } = useGlobalContext();
+
 	const [anchorEl, setAnchorEl] = React.useState(null);
 
 	const classes = useStyles();
-	const { email } = props.user[0];
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -51,12 +52,17 @@ const Home = (props) => {
 
 	const open = Boolean(anchorEl);
 	const id = open ? "simple-popover" : undefined;
-	useEffect(() => {
-		// localStorage.setItem("auth", JSON.stringify(auth));
-	}, []);
-	return (
-		<>
-			{getLocalStorage && (
+
+	const logout = () => {
+		localStorage.removeItem("token");
+		localStorage.removeItem("email");
+		setUser({});
+	};
+	// console.log(getLocalStorage("token"));
+	if (getLocalStorage("token").length > 0) {
+		const user = getLocalStorage("email");
+		return (
+			<>
 				<div className={classes.root}>
 					<AppBar position='static' className='appbar'>
 						<Toolbar className={classes.appStyles}>
@@ -75,7 +81,7 @@ const Home = (props) => {
 										fontWeight: "400",
 										fontSize: "1.2rem",
 									}}>
-									{email.slice(0, email.indexOf("@"))}
+									{user.slice(0, user.indexOf("@"))}
 								</h4>
 								<Tooltip title='Logout'>
 									<Avatar onClick={handleClick}></Avatar>
@@ -110,15 +116,17 @@ const Home = (props) => {
 						}}>
 						<Typography
 							className={classes.typography}
-							onClick={() => setUser({})}
+							onClick={() => logout()}
 							style={{ cursor: "pointer" }}>
 							Logout
 						</Typography>
 					</Popover>
 				</div>
-			)}
-		</>
-	);
+			</>
+		);
+	} else {
+		return <Navigate to='/signin' />;
+	}
 };
 
 export default Home;
